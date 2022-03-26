@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.vscode/
 
 config/auth.json
 config/config.json
