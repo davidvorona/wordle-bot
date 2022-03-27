@@ -1,6 +1,8 @@
 import { Client, Intents, Interaction } from "discord.js";
 import Game from "./game";
-import auth from "../config/auth.json";
+import { readFile } from "./util";
+
+const { TOKEN } = JSON.parse(readFile("../config/auth.json")) as AuthJson;
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
@@ -24,4 +26,4 @@ client.on("interactionCreate", async (interaction: Interaction) => {
     }
 });
 
-client.login(auth.token);
+client.login(TOKEN);
