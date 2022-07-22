@@ -21,7 +21,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
 
     if (interaction.commandName === "play") {
         await interaction.reply("Starting a new game of Wordle...");
-        const wordleGame = new Game(interaction.user.id);
+        const wordleGame = new Game(interaction);
         wordleGame.start();
     }
 });

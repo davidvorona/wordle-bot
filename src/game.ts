@@ -1,14 +1,23 @@
+import { TextBasedChannel, Interaction } from "discord.js";
 import { readFile, rand } from "./util";
 
 const WORDS_FILE_PATH = "../assets/sgb-words.txt";
 
 class Game {
-    userId: string;
+    interaction: Interaction;
 
     word: string;
 
-    constructor(userId: string) {
-        this.userId = userId;
+    board: string;
+
+    channel?: TextBasedChannel
+
+    constructor(interaction: Interaction) {
+        this.interaction = interaction;
+        this.board = this.initBoard();
+        if (interaction.channel) {
+            this.channel = interaction.channel;
+        }
         this.word = Game.chooseWord();
     }
 
@@ -19,8 +28,22 @@ class Game {
         return words[idx];
     }
 
-    start() {
-        console.log("Starting a new game of Wordle for user", this.userId, "with word", `'${this.word}'.`);
+    initBoard() {
+        let str = "";
+        for (let i = 0; i < 6; i++) {
+            str += "XXXXX\n";
+        }
+        return str;
+    }
+
+    async start() {
+        console.log(
+            "Starting a new game of Wordle for user",
+            this.interaction.user.id, "with word", `'${this.word}'.`
+        );
+        if (this.channel) {
+            this.channel.send(this.board);
+        }
     }
 }
 
